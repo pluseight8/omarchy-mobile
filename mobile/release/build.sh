@@ -30,6 +30,7 @@ source_archive="$output_dir/$source_name.tar.gz"
 bundle_archive="$output_dir/$bundle_name.tar.gz"
 
 rm -f "$source_archive" "$bundle_archive" "$output_dir/SHA256SUMS" "$output_dir/release-notes.md"
+rm -f "$output_dir/release-notes.ru.md"
 
 git -C "$ROOT" archive --format=tar.gz --prefix="$source_name/" -o "$source_archive" HEAD
 
@@ -37,6 +38,7 @@ bundle_root="$staging/$bundle_name"
 mkdir -p "$bundle_root/mobile"
 cp -R "$ROOT/mobile/." "$bundle_root/mobile/"
 cp "$ROOT/README.md" "$bundle_root/README.md"
+cp "$ROOT/README.ru.md" "$bundle_root/README.ru.md"
 cp "$ROOT/LICENSE" "$bundle_root/LICENSE"
 cp "$ROOT/version" "$bundle_root/omarchy-upstream-version"
 
@@ -59,7 +61,11 @@ This bundle was generated from commit $upstream_head. The upstream base recorded
 No bootable mobile image or live flashing backend is included. Verify the bundle, read mobile/install/recovery.md, and run mobile/install/install.sh --device google-pixel-10 --dry-run before doing anything else.
 
 The installer is expected to refuse a live Pixel 10 install because the device manifest remains untested.
+
+Русская версия: README.ru.md. Русские инструкции: mobile/install/INSTALL.ru.md и mobile/install/recovery.ru.md.
 EOF
+
+cp "$ROOT/mobile/install/INSTALL.ru.md" "$bundle_root/INSTALL.ru.md"
 
 tar -C "$staging" -czf "$bundle_archive" "$bundle_name"
 
@@ -74,4 +80,13 @@ tar -C "$staging" -czf "$bundle_archive" "$bundle_name"
   printf '\n## Assets\n\n- %s — complete upstream-based source archive.\n- %s — guarded installer, manifests, recovery checklist, and release metadata.\n- SHA256SUMS — SHA-256 checksums for both archives.\n' "$(basename "$source_archive")" "$(basename "$bundle_archive")"
 } >"$output_dir/release-notes.md"
 
-printf 'Created:\n  %s\n  %s\n  %s\n  %s\n' "$source_archive" "$bundle_archive" "$output_dir/SHA256SUMS" "$output_dir/release-notes.md"
+{
+  printf '# Omarchy Mobile %s — release notes\n\n' "$version"
+  printf 'Upstream base: %s (%s @ %s).\n\n' "$OMARCHY_UPSTREAM_REPOSITORY" "$OMARCHY_UPSTREAM_BRANCH" "$OMARCHY_UPSTREAM_COMMIT"
+  printf 'Исходный commit: %s.\n\n' "$upstream_head"
+  printf 'Reference device: %s; проверка на реальном железе: нет. В этом релизе нет загрузочного образа и рабочего flashing backend.\n\n' "$OMARCHY_MOBILE_REFERENCE_DEVICE"
+  cat "$ROOT/mobile/EXPERIMENTAL_WARNING.md"
+  printf '\n## Файлы\n\n- %s — полный source archive на основе upstream.\n- %s — защищённый installer, manifests, recovery checklist и metadata релиза.\n- SHA256SUMS — SHA-256 checksums обоих архивов.\n' "$(basename "$source_archive")" "$(basename "$bundle_archive")"
+} >"$output_dir/release-notes.ru.md"
+
+printf 'Created:\n  %s\n  %s\n  %s\n  %s\n  %s\n' "$source_archive" "$bundle_archive" "$output_dir/SHA256SUMS" "$output_dir/release-notes.md" "$output_dir/release-notes.ru.md"

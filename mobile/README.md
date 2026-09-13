@@ -1,5 +1,7 @@
 # Omarchy Mobile architecture
 
+[Русская версия](README.ru.md)
+
 Omarchy Mobile is an upstream-based fork, not a second desktop environment. The original Omarchy source remains the implementation of the shell, CLI, themes, applications, configuration, updates, plugins, and agentic workflows. The mobile/ tree supplies device contracts, detection, guarded installation, recovery documentation, and release tooling around that base.
 
 ## Design rules

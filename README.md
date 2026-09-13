@@ -1,5 +1,7 @@
 # Omarchy Mobile
 
+[Русская версия этого README](README.ru.md)
+
 Omarchy Mobile is an unofficial mobile fork of [Omarchy](https://github.com/omacom/omarchy). It keeps the original Omarchy tree, shell, themes, applications, CLI, plugins, configuration, updates, and agentic workflows as its foundation, then adds a mobile/device layer for Linux-capable smartphones.
 
 The goal is not to make an Android-style launcher or an unrelated mobile distribution. The goal is for the same Omarchy desktop to run on a phone and gain touch, rotation, on-screen keyboard, mobile hardware, and adaptive-display support where the underlying Linux kernel and device support make that possible.

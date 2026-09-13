@@ -39,6 +39,7 @@ jobs:
             dist/omarchy-mobile-*-source.tar.gz \
             dist/omarchy-mobile-*-install-bundle.tar.gz \
             dist/SHA256SUMS \
+            dist/release-notes.ru.md \
             --verify-tag \
             --title "Omarchy Mobile ${TAG#v}" \
             --notes-file dist/release-notes.md \

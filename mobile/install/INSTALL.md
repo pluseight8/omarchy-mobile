@@ -1,5 +1,7 @@
 # Omarchy Mobile installation bundle
 
+[Русская версия инструкции](INSTALL.ru.md)
+
 This bundle is a verification and recovery-safe planning artifact. It is not a bootable phone image. The installer refuses to change a device unless a future device manifest provides an exact image, a recovery path, a flashing backend, and a real-device validation record.
 
 ## Verify the downloaded bundle

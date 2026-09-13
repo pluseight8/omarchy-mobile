@@ -35,6 +35,10 @@ pass "installer dry-run is non-destructive"
 
 grep -Fq 'Текущие сборки ещё не были протестированы разработчиком на реальных устройствах' "$ROOT/README.md" || fail "root README carries the required warning"
 grep -Fq 'Текущие сборки ещё не были протестированы разработчиком на реальных устройствах' "$ROOT/mobile/install/INSTALL.md" || fail "installer instructions carry the required warning"
+test -s "$ROOT/README.ru.md" || fail "Russian root README exists"
+test -s "$ROOT/mobile/README.ru.md" || fail "Russian architecture documentation exists"
+test -s "$ROOT/mobile/install/INSTALL.ru.md" || fail "Russian installer documentation exists"
+test -s "$ROOT/mobile/install/recovery.ru.md" || fail "Russian recovery documentation exists"
 pass "required experimental warning is present in user-facing files"
 
 printf 'mobile contract tests passed\n'

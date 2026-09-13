@@ -1,5 +1,7 @@
 # Device manifests
 
+[Русская версия](README.ru.md)
+
 Every device is described by a JSON manifest. A manifest records what has been implemented, what is only planned, and what has actually been tested. It is deliberately separate from the Omarchy shell so that adding a device does not create a second desktop implementation.
 
 The supported status vocabulary is intentionally conservative:

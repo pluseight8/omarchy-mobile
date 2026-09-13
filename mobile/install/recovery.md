@@ -1,5 +1,7 @@
 # Recovery before testing Omarchy Mobile
 
+[Русская версия](recovery.ru.md)
+
 The only safe assumption at this stage is that a phone can become unbootable or lose all user data. Keep the exact factory image, vendor flashing tools, bootloader information, region/build identifiers, and a second device available before testing. The recovery steps are device-specific; this document is a checklist, not a Pixel 10 recovery procedure.
 
 1. Record the exact model, region, storage size, current build, bootloader state, and serial number.
