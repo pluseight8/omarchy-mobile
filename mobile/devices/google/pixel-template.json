@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "google-pixel-template",
+  "vendor": "Google",
+  "model": "Google Pixel device template",
+  "status": "untested",
+  "supportLevel": "planned",
+  "realHardwareValidated": false,
+  "lastValidatedAt": null,
+  "platform": {
+    "targetArchitecture": "aarch64",
+    "linuxBootRequired": true,
+    "androidRuntimeRequired": false,
+    "hardwareSupportStatus": "device-specific work required"
+  },
+  "boot": {
+    "imagesAvailable": false,
+    "installerAvailable": false,
+    "recovery": "Use only a vendor recovery procedure that has been tested for the exact model."
+  },
+  "capabilities": {
+    "display": { "status": "untested" },
+    "touch": { "status": "untested" },
+    "rotation": { "status": "untested" },
+    "onScreenKeyboard": { "status": "untested" },
+    "keyboardMouseStylus": { "status": "untested" },
+    "wifiBluetoothAudioCameraSensorsCellularGpuPowerUsb": { "status": "untested" },
+    "originalOmarchyShell": { "status": "planned" }
+  },
+  "validation": {
+    "realHardwareValidated": false,
+    "results": [],
+    "requiredEvidence": ["Create a model-specific manifest and test report before advertising support."]
+  }
+}

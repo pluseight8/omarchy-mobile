@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "referenceDevice": "google-pixel-10",
+  "devices": [
+    {
+      "id": "google-pixel-10",
+      "path": "google/pixel-10.json",
+      "support": "untested",
+      "realHardwareValidated": false
+    },
+    {
+      "id": "google-pixel-template",
+      "path": "google/pixel-template.json",
+      "support": "untested",
+      "realHardwareValidated": false
+    },
+    {
+      "id": "android-generic",
+      "path": "android/generic.json",
+      "support": "untested",
+      "realHardwareValidated": false
+    }
+  ]
+}

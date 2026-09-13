@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "google-pixel-10",
+  "vendor": "Google",
+  "model": "Pixel 10",
+  "status": "untested",
+  "supportLevel": "experimental",
+  "realHardwareValidated": false,
+  "lastValidatedAt": null,
+  "referenceDevice": true,
+  "platform": {
+    "targetArchitecture": "aarch64",
+    "linuxBootRequired": true,
+    "androidRuntimeRequired": false,
+    "kernelAndDeviceTree": "not supplied by this repository",
+    "hardwareSupportStatus": "unverified"
+  },
+  "boot": {
+    "bootloaderInterface": "fastboot (to be confirmed on the exact retail variant)",
+    "bootloaderUnlockRequired": true,
+    "imagesAvailable": false,
+    "installerAvailable": false,
+    "recovery": "Keep the exact factory image and a documented vendor recovery path before testing. No Omarchy Mobile recovery image is published.",
+    "dataWipeRisk": "Unlocking or flashing a bootloader may erase user data. Assume that it will.",
+    "notes": "This manifest does not claim that the Pixel 10 can currently boot Omarchy Mobile."
+  },
+  "capabilities": {
+    "display": { "status": "untested" },
+    "touch": { "status": "untested" },
+    "rotation": { "status": "untested" },
+    "onScreenKeyboard": { "status": "untested" },
+    "keyboardMouseStylus": { "status": "untested" },
+    "wifi": { "status": "untested" },
+    "bluetooth": { "status": "untested" },
+    "audio": { "status": "untested" },
+    "camera": { "status": "untested" },
+    "sensors": { "status": "untested" },
+    "cellular": { "status": "untested" },
+    "gpuAcceleration": { "status": "untested" },
+    "powerManagement": { "status": "untested" },
+    "usb": { "status": "untested" },
+    "originalOmarchyShell": { "status": "planned", "note": "Uses the upstream shell; no mobile runtime integration is claimed yet." },
+    "themesCliPluginsAgents": { "status": "planned", "note": "These remain upstream components and require a working Linux userspace first." }
+  },
+  "validation": {
+    "realHardwareValidated": false,
+    "results": [],
+    "requiredEvidence": [
+      "Exact retail model, region, bootloader state, and kernel/userspace commit",
+      "Boot and recovery procedure tested on a spare device",
+      "Display, touch, rotation, keyboard, Wi-Fi, Bluetooth, audio, camera, sensors, cellular, GPU, power, and USB checks",
+      "Suspend/resume, thermal, battery, reboot, factory recovery, and data-preservation checks",
+      "A reproducible report attached to this manifest before support is upgraded"
+    ]
+  }
+}

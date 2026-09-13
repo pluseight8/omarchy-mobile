@@ -1,0 +1,90 @@
+#!/bin/bash
+# omarchy:summary=Inspect and safely manage Omarchy Mobile
+# omarchy:args=[status|device|manifest|install|recovery|upstream|warning] [options]
+# omarchy:examples=omarchy mobile status | omarchy mobile status --json | omarchy mobile install --device google-pixel-10 --dry-run
+
+set -o pipefail
+
+if [[ -z ${OMARCHY_PATH:-} ]]; then
+  printf 'omarchy-mobile: OMARCHY_PATH is not set; run it inside an Omarchy session or export the checkout path\n' >&2
+  exit 1
+fi
+
+MOBILE_ROOT="$OMARCHY_PATH/mobile"
+export MOBILE_ROOT
+
+# shellcheck disable=SC1091
+source "$MOBILE_ROOT/lib/common.sh"
+
+show_help() {
+  cat <<'EOF'
+Usage:
+  omarchy mobile status [--json] [device-id]
+  omarchy mobile device
+  omarchy mobile manifest [device-id]
+  omarchy mobile install [options]
+  omarchy mobile recovery
+  omarchy mobile upstream [--check|--apply]
+  omarchy mobile warning
+
+This command exposes the mobile overlay without replacing the upstream
+Omarchy shell, CLI, themes, applications, or agentic workflows.
+
+Every device status is evidence-based. A green software test is not a real
+device validation, and the installer refuses to flash devices without a
+device-specific image, recovery path, and validation record.
+EOF
+}
+
+command="${1:-status}"
+if [[ $command == "--help" || $command == "-h" ]]; then
+  show_help
+  exit 0
+fi
+shift || true
+
+case "$command" in
+  status)
+    json="false"
+    device=""
+    while (( $# > 0 )); do
+      case "$1" in
+        --json) json="true" ;;
+        --help|-h) show_help; exit 0 ;;
+        -*) mobile_die "unknown status option: $1"; exit 2 ;;
+        *) device="$1" ;;
+      esac
+      shift
+    done
+    mobile_print_status "$device" "$json"
+    ;;
+  device)
+    [[ $# -eq 0 ]] || mobile_die "device takes no arguments"
+    printf '%s\n' "$(mobile_detect_device_id)"
+    ;;
+  manifest)
+    resolved=$(mobile_resolve_manifest "${1:-}") || exit 1
+    IFS=$'\t' read -r _ manifest_path <<<"$resolved"
+    cat "$manifest_path"
+    ;;
+  install)
+    exec "$MOBILE_ROOT/install/install.sh" "$@"
+    ;;
+  recovery)
+    cat "$MOBILE_ROOT/install/recovery.md"
+    ;;
+  upstream)
+    exec "$MOBILE_ROOT/sync-upstream.sh" "$@"
+    ;;
+  warning)
+    mobile_print_warning
+    ;;
+  --help|-h)
+    show_help
+    ;;
+  *)
+    mobile_die "unknown command: $command"
+    show_help >&2
+    exit 2
+    ;;
+esac

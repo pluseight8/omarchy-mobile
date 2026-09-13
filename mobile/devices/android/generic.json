@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "android-generic",
+  "vendor": "Unknown",
+  "model": "Generic Android-compatible device",
+  "status": "untested",
+  "supportLevel": "planned",
+  "realHardwareValidated": false,
+  "lastValidatedAt": null,
+  "platform": {
+    "targetArchitecture": "device-dependent",
+    "linuxBootRequired": true,
+    "androidRuntimeRequired": false,
+    "hardwareSupportStatus": "not implemented"
+  },
+  "boot": {
+    "imagesAvailable": false,
+    "installerAvailable": false,
+    "recovery": "No generic Android installation path exists. Use a device-specific recovery procedure only."
+  },
+  "capabilities": {
+    "displayTouchRotationOnScreenKeyboard": { "status": "untested" },
+    "keyboardMouseStylus": { "status": "untested" },
+    "wifiBluetoothAudioCameraSensorsCellularGpuPowerUsb": { "status": "untested" },
+    "originalOmarchyShell": { "status": "planned" }
+  },
+  "validation": {
+    "realHardwareValidated": false,
+    "results": [],
+    "requiredEvidence": ["Replace this template with an exact device manifest and reproducible report."]
+  }
+}

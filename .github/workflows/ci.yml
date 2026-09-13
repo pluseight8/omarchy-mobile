@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  mobile-contracts:
+    name: Mobile contracts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the exact commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run shell syntax and mobile contract tests
+        run: |
+          OMARCHY_PATH="$GITHUB_WORKSPACE" bash mobile/tests/test.sh
+
+      - name: Validate Omarchy CLI metadata
+        run: |
+          OMARCHY_PATH="$GITHUB_WORKSPACE" ./bin/omarchy commands --check
+
+      - name: Check formatting-sensitive whitespace
+        run: git diff --check
+
+  upstream-contract:
+    name: Upstream base contract
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the exact commit
+        uses: actions/checkout@v4
+
+      - name: Verify the tracked upstream metadata and core tree
+        run: |
+          test -s mobile/upstream.env
+          test -d shell
+          test -d bin
+          test -d install
+          test -d themes
+          test -x mobile/sync-upstream.sh

@@ -1,0 +1,32 @@
+name: Upstream drift check
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Check Omarchy quattro drift
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the fork
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compare the recorded upstream branch
+        run: |
+          source mobile/upstream.env
+          git remote add upstream "$OMARCHY_UPSTREAM_REPOSITORY"
+          git fetch --no-tags upstream "$OMARCHY_UPSTREAM_BRANCH"
+          upstream_commit="$(git rev-parse "upstream/$OMARCHY_UPSTREAM_BRANCH")"
+          if git merge-base --is-ancestor "$upstream_commit" HEAD; then
+            echo "Fork contains upstream $upstream_commit"
+          else
+            echo "::warning::Upstream $OMARCHY_UPSTREAM_BRANCH advanced to $upstream_commit. Run mobile/sync-upstream.sh --apply and review the merge."
+            exit 1
+          fi

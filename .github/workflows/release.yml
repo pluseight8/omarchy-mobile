@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build verified release assets
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      startsWith(github.event.workflow_run.head_branch, 'v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the exact CI-tested commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - name: Build source, installer, recovery, and checksum assets
+        run: |
+          version="${GITHUB_EVENT_HEAD_BRANCH#v}"
+          mkdir -p dist
+          bash mobile/release/build.sh "$version" dist
+        env:
+          GITHUB_EVENT_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+
+      - name: Publish the release only after CI passed for this SHA
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          gh release create "$TAG" \
+            dist/omarchy-mobile-*-source.tar.gz \
+            dist/omarchy-mobile-*-install-bundle.tar.gz \
+            dist/SHA256SUMS \
+            --verify-tag \
+            --title "Omarchy Mobile ${TAG#v}" \
+            --notes-file dist/release-notes.md \
+            --prerelease
