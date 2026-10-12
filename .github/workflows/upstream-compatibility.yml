@@ -72,7 +72,7 @@ jobs:
         run: |
           qmllint_bin="$(command -v qmllint || find /usr/lib/qt6 /usr/lib/aarch64-linux-gnu/qt6 -type f -name qmllint -print -quit)"
           test -n "$qmllint_bin"
-          "$qmllint_bin" --ignore-settings -I omarchy-upstream/shell --import-failure=info --unresolved-type=info mobile/launcher/Launcher.qml
+          "$qmllint_bin" -I omarchy-upstream/shell mobile/launcher/Launcher.qml
 
       - name: Run source contract tests
         run: npm test
