@@ -118,9 +118,10 @@ Google's factory-image documentation states that flashing a factory image erases
 - postmarketOS device wiki index: https://wiki.postmarketos.org/wiki/Devices
 
 
+
 ## Package source refresh review (2026-10-12)
 
-The compatibility workflow found that the quattro ref had not moved from 4c1b4cb3a94447aff39af98e2fcc0490a9fb32e7, while omarchy-pkgs had advanced from be468d003ea717e87de04d1c9aeba838c8652394 to 2d0152c067f41a36ce0e2e2fd26da222f9e243bb. The two-commit comparison changed only pkgbuilds/t3code-nightly-bin/PKGBUILD. Inspection of the old and current recipe showed a nightly version and architecture-specific checksum refresh; the declared x86_64 and aarch64 architectures and packaging steps did not change. This package is not a dependency of the mobile launcher. The reviewed pin is advanced to the inspected package commit: https://github.com/omacom/omarchy-pkgs/tree/2d0152c067f41a36ce0e2e2fd26da222f9e243bb. No ARM package build or app runtime test was performed, so this is source review only.
+The compatibility workflow found that the quattro ref remained at 4c1b4cb3a94447aff39af98e2fcc0490a9fb32e7 while omarchy-pkgs advanced from be468d003ea717e87de04d1c9aeba838c8652394 to 162f79697713dd9fad97a79521a8aed4f54ea772. The four-commit comparison changed only pkgbuilds/flea/PKGBUILD and pkgbuilds/t3code-nightly-bin/PKGBUILD. Inspection showed version and checksum updates only: Flea 0.3.8 to 0.3.9 and the T3 Code nightly build to 2026-10-12. Both keep their x86_64 and aarch64 declarations and build steps. Neither is a dependency of this mobile launcher. The Quickshell 0.3.2 pkgrel 4 recipe did not change. The package snapshot pin is advanced to the inspected commit: https://github.com/omacom/omarchy-pkgs/tree/162f79697713dd9fad97a79521a8aed4f54ea772. CI now blocks on Quickshell package recipe changes; Omarchy ARM package-list changes are monitored in the Omarchy source. No ARM package build or app runtime test was performed, so this is source review only.
 
 ## Open engineering questions
 
