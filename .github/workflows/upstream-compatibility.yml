@@ -89,10 +89,10 @@ jobs:
           OMARCHY_UPSTREAM: omarchy-upstream
           OMARCHY_PACKAGES: omarchy-packages
 
-      - name: Require review when upstream plugin contracts move
+      - name: Require review when watched upstream sources move
         if: steps.compare.outputs.needs_review == 'true' && github.event_name == 'pull_request'
         run: |
-          echo "Upstream plugin contracts changed since the reviewed pin. Review the upstream diff and update the compatibility record before merging."
+          echo "Watched Omarchy or package sources changed since the reviewed pin. Review the listed paths and update the compatibility record before merging."
           exit 1
 
 
