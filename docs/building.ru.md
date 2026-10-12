@@ -12,7 +12,7 @@
 
     OMARCHY_UPSTREAM=/path/to/omarchy node tools/check-upstream.mjs
 
-GitHub workflow настроен на QML syntax lint и проверки исходников на публичном ARM64 runner с меткой ubuntu-24.04-arm. GitHub Actions закреплены по commit SHA. Образ runner, версии пакетов Qt/Node и ветки upstream обновляются, поэтому это пока не побитово воспроизводимая сборка системы. Workflow ещё не запускался для этой ветки.
+12 октября 2026 года GitHub workflow успешно прошёл на публичном ARM64 runner ubuntu-24.04-arm: QML syntax lint, все 7 Node контрактных тестов и сравнение закреплённых исходников upstream. Линтер использует Ubuntu Qt 6.4.2 и пакет `qml6-module-qtquick`; `.qmllint.ini` оставляет отсутствующие внешние импорты Quickshell/Omarchy и зависящие от них предупреждения об типах информационными, поскольку CI не собирает эти проекты или сгенерированные QML type metadata. Ошибки синтаксиса остаются критичными, но это не семантическая проверка QML и не runtime-тест. Checkout и Node setup actions закреплены по commit SHA. Образ runner, версии пакетов Qt/Node и ветки upstream обновляются, поэтому это пока не побитово воспроизводимая сборка системы.
 
 ## Чего пока нет
 
