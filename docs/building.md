@@ -12,7 +12,7 @@ For a live source comparison, provide a full-history checkout of omacom/omarchy:
 
     OMARCHY_UPSTREAM=/path/to/omarchy node tools/check-upstream.mjs
 
-The GitHub workflow is configured to run QML syntax lint and these source checks on the public ARM64 GitHub-hosted runner label ubuntu-24.04-arm. The workflow pins the checkout and Node setup actions by commit SHA. The runner image, Qt/Node package revisions, and upstream branches continue to move, so this is not yet a bit-for-bit reproducible system build. The workflow has not yet run for this branch.
+The GitHub workflow ran successfully on the public ARM64 GitHub-hosted runner label ubuntu-24.04-arm (run 4, 2026-10-12): QML syntax lint, all 7 Node contract tests, and the pinned upstream source comparison passed. The lint uses Ubuntu Qt 6.4.2 and `qml6-module-qtquick`; `.qmllint.ini` treats unresolved external Quickshell/Omarchy imports and dependent type warnings as informational because CI does not build those projects or generated type metadata. Syntax errors remain fatal, but this is not semantic QML validation or a runtime test. The workflow pins checkout and Node setup actions by commit SHA. The runner image, Qt/Node package revisions, and upstream branches continue to move, so this is not a bit-for-bit reproducible system build.
 
 ## Not available yet
 
