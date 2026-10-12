@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "mobileVersion": "0.1.0",
+  "upstream": {
+    "repository": "omacom/omarchy",
+    "reviewedRef": "quattro",
+    "reviewedCommit": "4c1b4cb3a94447aff39af98e2fcc0490a9fb32e7",
+    "latestReleaseFound": "v4.0.4",
+    "latestReleaseCommit": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+    "packagesRepository": "omacom/omarchy-pkgs",
+    "packagesReviewedCommit": "162f79697713dd9fad97a79521a8aed4f54ea772",
+    "omarchyPackageSourceCommit": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5"
+  },
+  "result": "STATIC_SOURCE_REVIEW_ONLY",
+  "runtimeTested": false,
+  "qmlLinted": true,
+  "armPackageBuildTested": false,
+  "pixel10Tested": false,
+  "notes": [
+    "A source-only QML syntax lint passed on the ubuntu-24.04-arm GitHub runner with Qt 6.4.2; Quickshell/Omarchy type metadata is not installed, so this is not semantic or runtime validation.",
+    "The omarchy-pkgs review advanced to 162f79697713dd9fad97a79521a8aed4f54ea772 after reviewing the only changed recipes: optional T3 Code and Flea version/checksum updates. The Quickshell recipe was unchanged; no ARM package build was performed.",
+    "The result is not a release compatibility certification.",
+    "Pixel 10 hardware status is recorded separately in the dated research report."
+  ]
+}
