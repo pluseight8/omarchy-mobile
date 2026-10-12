@@ -117,6 +117,11 @@ Google's factory-image documentation states that flashing a factory image erases
 - Generic Arch Linux ARM AArch64 installation notes: https://archlinuxarm.org/platforms/armv8/generic
 - postmarketOS device wiki index: https://wiki.postmarketos.org/wiki/Devices
 
+
+## Package source refresh review (2026-10-12)
+
+The compatibility workflow found that the quattro ref had not moved from 4c1b4cb3a94447aff39af98e2fcc0490a9fb32e7, while omarchy-pkgs had advanced from be468d003ea717e87de04d1c9aeba838c8652394 to 2d0152c067f41a36ce0e2e2fd26da222f9e243bb. The two-commit comparison changed only pkgbuilds/t3code-nightly-bin/PKGBUILD. Inspection of the old and current recipe showed a nightly version and architecture-specific checksum refresh; the declared x86_64 and aarch64 architectures and packaging steps did not change. This package is not a dependency of the mobile launcher. The reviewed pin is advanced to the inspected package commit: https://github.com/omacom/omarchy-pkgs/tree/2d0152c067f41a36ce0e2e2fd26da222f9e243bb. No ARM package build or app runtime test was performed, so this is source review only.
+
 ## Open engineering questions
 
 1. Does the upstream plugin loader accept a third-party menu with this exact QML import set and injected facade at runtime?
