@@ -13,11 +13,11 @@
   },
   "result": "STATIC_SOURCE_REVIEW_ONLY",
   "runtimeTested": false,
-  "qmlLinted": false,
+  "qmlLinted": true,
   "armPackageBuildTested": false,
   "pixel10Tested": false,
   "notes": [
-    "The plugin contract was checked against upstream source; the Quickshell component has not been run.",
+    "A source-only QML syntax lint passed on the ubuntu-24.04-arm GitHub runner with Qt 6.4.2; Quickshell/Omarchy type metadata is not installed, so this is not semantic or runtime validation.",
     "The result is not a release compatibility certification.",
     "Pixel 10 hardware status is recorded separately in the dated research report."
   ]
