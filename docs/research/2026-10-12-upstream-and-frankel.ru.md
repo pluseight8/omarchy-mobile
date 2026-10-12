@@ -117,6 +117,11 @@ README репозитория Linaro был изучен из ветки, но �
 - Общие заметки по установке Arch Linux ARM AArch64: https://archlinuxarm.org/platforms/armv8/generic
 - Список устройств postmarketOS: https://wiki.postmarketos.org/wiki/Devices
 
+
+## Проверка обновления рецепта пакета (2026-10-12)
+
+Workflow совместимости обнаружил, что ref quattro не изменился и остался на 4c1b4cb3a94447aff39af98e2fcc0490a9fb32e7, а omarchy-pkgs перешёл с be468d003ea717e87de04d1c9aeba838c8652394 на 2d0152c067f41a36ce0e2e2fd26da222f9e243bb. Сравнение двух commit затронуло только pkgbuilds/t3code-nightly-bin/PKGBUILD. В старом и текущем рецепте изменились версия nightly и архитектурные контрольные суммы; списки архитектур x86_64 и aarch64 и шаги сборки не изменились. Этот пакет не является зависимостью мобильного launcher. Проверенная ревизия закреплена на изученном commit: https://github.com/omacom/omarchy-pkgs/tree/2d0152c067f41a36ce0e2e2fd26da222f9e243bb. Сборка ARM-пакета и запуск приложения не выполнялись; это только проверка исходников.
+
 ## Открытые инженерные вопросы
 
 1. Принимает ли loader upstream-плагинов menu этот QML-набор импортов и scoped facade в runtime?
