@@ -24,7 +24,9 @@ const watched = [
   /^shell\/plugins\/menu\//
 ];
 const watchedPackages = [
-  /^pkgbuilds\//,
+  // Quickshell is the direct package-repository dependency of the mobile shell prototype.
+  // Optional app recipes are tracked by Omarchy's package lists, not as shell API contracts.
+  /^pkgbuilds\/quickshell(?:-git)?\//,
   /^repos\//,
   /^README\.md$/,
   /^\.github\/workflows\//
