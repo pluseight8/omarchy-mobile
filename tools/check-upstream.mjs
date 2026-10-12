@@ -68,7 +68,7 @@ if (packagesPath) {
 }
 const relevantPackages = packageChangedFiles.filter(path => watchedPackages.some(pattern => pattern.test(path)));
 const summary = [
-  "# Omarchy upstream source comparison",
+  "# Omarchy and package source comparison",
   "",
   "- Reviewed pin: " + record.upstream.reviewedCommit,
   "- Candidate HEAD: " + currentCommit,
