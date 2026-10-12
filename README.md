@@ -9,7 +9,8 @@ The repository starts with a touch-oriented application launcher plugin. It reus
 - Stage: research and shell prototype.
 - Upstream code reviewed: omacom/omarchy branch quattro, commit 4c1b4cb3a94447aff39af98e2fcc0490a9fb32e7.
 - Latest upstream release found in this audit: v4.0.4.
-- Runtime, visual, ARM package, and physical Pixel 10 tests: not run.
+- Static QML syntax lint and source-contract CI: passed on an ARM64 Ubuntu 24.04 runner with Qt 6.4.2; all 7 Node tests passed.
+- Quickshell runtime and visual tests, ARM package build, and physical Pixel 10 tests: not run.
 - Pixel 10 hardware: experimental boot work exists in an external development tree; this repository contains no bootable image or flashing procedure.
 - Not for installation or daily use.
 
@@ -21,7 +22,7 @@ The root manifest declares a third-party Omarchy menu plugin. Its Quickshell ent
 
 The plugin has to be installed in an Omarchy session that already runs the upstream Quickshell shell. It is summoned with the upstream plugin IPC after installation and enabling. The repository does not yet package or install itself as an Omarchy plugin.
 
-The launcher is a real upstream plugin integration in source, but it has not yet been run under Quickshell. The workflow is configured to run QML syntax linting and source-contract checks; it has not completed a run for this branch. It does not validate QML runtime behavior, screenshots, virtual keyboard integration, gestures outside this menu, or hardware.
+The launcher is a real upstream plugin integration in source, but it has not yet been run under Quickshell. GitHub Actions run 4 passed QML syntax lint, all 7 Node contract tests, and the pinned source comparison. This is source-only lint: Quickshell/Omarchy type metadata is not built in CI, so it does not prove QML runtime behavior or semantic compatibility. It does not validate QML runtime behavior, screenshots, virtual keyboard integration, gestures outside this menu, or hardware.
 
 ## Development checks
 
