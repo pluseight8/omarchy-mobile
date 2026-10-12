@@ -46,7 +46,7 @@ test("compatibility record does not overstate unrun checks", () => {
   assert.equal(record.result, "STATIC_SOURCE_REVIEW_ONLY");
   assert.equal(record.upstream.latestReleaseCommit, record.upstream.omarchyPackageSourceCommit);
   assert.equal(record.runtimeTested, false);
-  assert.equal(record.qmlLinted, false);
+  assert.equal(record.qmlLinted, true);
   assert.equal(record.armPackageBuildTested, false);
   assert.equal(record.pixel10Tested, false);
 });
