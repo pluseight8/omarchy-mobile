@@ -1,0 +1,129 @@
+name: Upstream compatibility review
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "23 8 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  source-contract:
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: read
+    outputs:
+      needs_review: ${{ steps.compare.outputs.needs_review }}
+      issue_title: ${{ steps.compare.outputs.issue_title }}
+      candidate_upstream_commit: ${{ steps.compare.outputs.candidate_upstream_commit }}
+      candidate_packages_commit: ${{ steps.compare.outputs.candidate_packages_commit }}
+      changed_files_json: ${{ steps.compare.outputs.changed_files_json }}
+    steps:
+      - name: Check out Omarchy Mobile
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Check out current Omarchy quattro source
+        id: upstream_source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: omacom/omarchy
+          ref: quattro
+          path: omarchy-upstream
+          fetch-depth: 0
+
+      - name: Resolve latest Omarchy release
+        id: release
+        run: echo "tag=$(gh api repos/omacom/omarchy/releases/latest --jq .tag_name)" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Check out latest Omarchy release
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: omacom/omarchy
+          ref: ${{ steps.release.outputs.tag }}
+          path: omarchy-latest-release
+          fetch-depth: 1
+
+      - name: Check out current Omarchy package recipes
+        id: package_source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: omacom/omarchy-pkgs
+          ref: master
+          path: omarchy-packages
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+
+      - name: Install Qt QML lint tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends --yes qt6-declarative-dev-tools
+
+      - name: Lint QML syntax
+        run: |
+          qmllint_bin="$(command -v qmllint || find /usr/lib/qt6 /usr/lib/aarch64-linux-gnu/qt6 -type f -name qmllint -print -quit)"
+          test -n "$qmllint_bin"
+          "$qmllint_bin" --ignore-settings -I omarchy-upstream/shell --import-failure=info --unresolved-type=info mobile/launcher/Launcher.qml
+
+      - name: Run source contract tests
+        run: npm test
+        env:
+          OMARCHY_UPSTREAM: omarchy-upstream
+          OMARCHY_RELEASE: omarchy-latest-release
+          OMARCHY_PACKAGES: omarchy-packages
+
+      - name: Compare upstream plugin contracts
+        id: compare
+        if: always() && steps.upstream_source.outcome == 'success' && steps.package_source.outcome == 'success'
+        run: node tools/check-upstream.mjs
+        env:
+          OMARCHY_UPSTREAM: omarchy-upstream
+          OMARCHY_PACKAGES: omarchy-packages
+
+      - name: Require review when upstream plugin contracts move
+        if: steps.compare.outputs.needs_review == 'true' && github.event_name == 'pull_request'
+        run: |
+          echo "Upstream plugin contracts changed since the reviewed pin. Review the upstream diff and update the compatibility record before merging."
+          exit 1
+
+
+  open-review-issue:
+    if: always() && needs.source-contract.outputs.needs_review == 'true' && github.event_name != 'pull_request'
+    needs: source-contract
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      issues: write
+    steps:
+      - name: Open one review issue when upstream contracts move
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE_TITLE: ${{ needs.source-contract.outputs.issue_title }}
+          UPSTREAM_COMMIT: ${{ needs.source-contract.outputs.candidate_upstream_commit }}
+          PACKAGES_COMMIT: ${{ needs.source-contract.outputs.candidate_packages_commit }}
+          CHANGED_FILES: ${{ needs.source-contract.outputs.changed_files_json }}
+        run: |
+          if gh issue list --state open --limit 100 --json title --jq '.[].title' | grep -Fqx "$ISSUE_TITLE"; then
+            echo "An open upstream compatibility review issue already exists."
+          else
+            BODY=$(cat <<EOF
+          Scheduled source checks found upstream changes that need review.
+
+          This does not establish that a breaking change exists. Review the listed paths, run the missing package and Quickshell runtime gates, then update the compatibility pin only after evidence is recorded.
+
+          Candidate Omarchy commit: $UPSTREAM_COMMIT
+          Candidate omarchy-pkgs commit: $PACKAGES_COMMIT
+          Changed watched paths (JSON): $CHANGED_FILES
+          EOF
+          )
+            gh issue create --title "$ISSUE_TITLE" --body "$BODY"
+          fi

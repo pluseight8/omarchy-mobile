@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "omarchy.mobile.launcher",
+  "name": "Omarchy Mobile Launcher",
+  "version": "0.1.0",
+  "author": "Omarchy Mobile contributors",
+  "description": "Touch-oriented application launcher using Omarchy's shared application library.",
+  "kinds": ["menu"],
+  "entryPoints": {
+    "menu": "mobile/launcher/Launcher.qml"
+  }
+}

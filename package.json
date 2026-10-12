@@ -1,0 +1,13 @@
+{
+  "name": "omarchy-mobile",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Early mobile adaptation of the Omarchy Quickshell plugin interface",
+  "scripts": {
+    "test": "node tests/contract.test.mjs",
+    "check:upstream": "node tools/check-upstream.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

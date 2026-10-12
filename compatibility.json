@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "mobileVersion": "0.1.0",
+  "upstream": {
+    "repository": "omacom/omarchy",
+    "reviewedRef": "quattro",
+    "reviewedCommit": "4c1b4cb3a94447aff39af98e2fcc0490a9fb32e7",
+    "latestReleaseFound": "v4.0.4",
+    "latestReleaseCommit": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5",
+    "packagesRepository": "omacom/omarchy-pkgs",
+    "packagesReviewedCommit": "be468d003ea717e87de04d1c9aeba838c8652394",
+    "omarchyPackageSourceCommit": "c668141e9c42b13c80c9ca4ea108e11708c5e8a5"
+  },
+  "result": "STATIC_SOURCE_REVIEW_ONLY",
+  "runtimeTested": false,
+  "qmlLinted": false,
+  "armPackageBuildTested": false,
+  "pixel10Tested": false,
+  "notes": [
+    "The plugin contract was checked against upstream source; the Quickshell component has not been run.",
+    "The result is not a release compatibility certification.",
+    "Pixel 10 hardware status is recorded separately in the dated research report."
+  ]
+}
